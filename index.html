@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Afirmasi - Pitch Deck Aero Blue Minimalis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(160deg,
+                #eaf7ff 0%,
+                #cdeeff 18%,
+                #9fdcff 36%,
+                #6fc3f5 54%,
+                #4a9fe0 72%,
+                #f6d9c4 88%,
+                #f3b98f 100%);
+            background-size: 200% 200%;
+            animation: skyDrift 28s ease-in-out infinite;
+            color: #003366;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        @keyframes skyDrift {
+            0%   { background-position: 0% 20%; }
+            50%  { background-position: 100% 80%; }
+            100% { background-position: 0% 20%; }
+        }
+
+        /* Aero Glass Effect Background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.75) 0%, transparent 45%),
+                radial-gradient(circle at 85% 10%, rgba(255, 244, 214, 0.55) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(173, 216, 230, 0.5) 0%, transparent 55%),
+                radial-gradient(circle at 30% 30%, rgba(135, 206, 250, 0.55) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 30% at 50% 0%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+            z-index: -1;
+        }
+
+        /* Halus grain overlay untuk kesan lukisan/artistik */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+            mix-blend-mode: overlay;
+        }
+
+        /* Cahaya matahari lembut, dekoratif */
+        .sun-glow {
+            position: fixed;
+            top: -10%;
+            right: -8%;
+            width: 42vw;
+            height: 42vw;
+            max-width: 520px;
+            max-height: 520px;
+            background: radial-gradient(circle, rgba(255,250,230,0.9) 0%, rgba(255,223,173,0.35) 40%, transparent 72%);
+            border-radius: 50%;
+            filter: blur(4px);
+            z-index: -1;
+            animation: sunPulse 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.06); }
+        }
+
+        /* Blob aurora dekoratif untuk sentuhan artistik */
+        .art-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        .art-blob-1 {
+            width: 380px; height: 380px;
+            background: radial-gradient(circle, rgba(255,180,210,0.5), transparent 70%);
+            bottom: -10%; left: -6%;
+            animation: blobDrift 24s ease-in-out infinite;
+        }
+        .art-blob-2 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(160,220,255,0.55), transparent 70%);
+            top: 25%; left: 40%;
+            animation: blobDrift 30s ease-in-out infinite reverse;
+        }
+        @keyframes blobDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -25px) scale(1.12); }
+        }
+        
+        .presentation-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slides-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            z-index: 1;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+        
+        .slide-glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(31, 134, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 95%;
+            height: 85%;
+            overflow-y: auto;
+        }
+        
+        .slide-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .slide-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        .slide-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #0078d7, #00b4ff);
+            border-radius: 10px;
+        }
+        
+        .slide-number {
+            display: inline-block;
+            font-size: 1em;
+            color: #0078d7;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 6px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 22px;
+        }
+        
+        .slide-title {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #0066cc, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 102, 204, 0.2);
+        }
+        
+        .slide-subtitle {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            font-size: 1.6em;
+            color: #0059b3;
+            margin-bottom: 35px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .affirmation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .affirmation-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        
+        .affirmation-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: #0078d7;
+            box-shadow: 
+                0 12px 24px rgba(0, 120, 215, 0.2),
+                0 4px 8px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .affirmation-index {
+            background: linear-gradient(135deg, #0078d7, #00b4ff);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 1.1em;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 120, 215, 0.3);
+        }
+        
+        .affirmation-text {
+            font-size: 1.15em;
+            color: #003366;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            font-size: 2.2em;
+            color: #0066cc;
+            margin: 35px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 102, 204, 0.2);
+            font-weight: 700;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            background: rgba(0, 120, 215, 0.15);
+            color: #0078d7;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 120, 215, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Navigation removed - only indicator remains */
+        .slide-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 120, 215, 0.3);
+        }
+        
+        .indicator-dot.active {
+            background: linear-gradient(135deg, #0078d7, #00b4ff);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(0, 120, 215, 0.5);
+        }
+        
+        .watermark {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #0066cc, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.9;
+            text-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+        }
+        
+        .tip-box {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #0078d7;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .tip-title {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            color: #0078d7;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tip-content {
+            color: #0059b3;
+            line-height: 1.6;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .jump-tip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 22px;
+            padding: 10px 22px;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #0078d7;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 120, 215, 0.35);
+            border-radius: 20px;
+            cursor: pointer;
+            width: fit-content;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 120, 215, 0.12);
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        .jump-tip-badge:hover {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: #0078d7;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 120, 215, 0.22);
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(0, 120, 215, 0.12); }
+            50% { box-shadow: 0 4px 18px rgba(0, 120, 215, 0.28); }
+        }
+        
+        .how-to-list {
+            margin-top: 30px;
+            padding-left: 20px;
+        }
+        
+        .how-to-list li {
+            margin: 15px 0;
+            color: #003366;
+            font-size: 1.1em;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .how-to-list li::before {
+            content: "→";
+            color: #0078d7;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+        
+        .final-message {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        
+        /* Cloud Effects */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50px;
+            z-index: -1;
+            animation: float 20s infinite linear;
+            filter: blur(1px);
+        }
+        
+        .cloud-1 {
+            width: 200px;
+            height: 80px;
+            top: 10%;
+            right: 5%;
+            animation-delay: 0s;
+        }
+        
+        .cloud-2 {
+            width: 150px;
+            height: 60px;
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 5s;
+            opacity: 0.8;
+        }
+        
+        .cloud-3 {
+            width: 180px;
+            height: 70px;
+            top: 30%;
+            left: 5%;
+            animation-delay: 10s;
+        }
+
+        .cloud-4 {
+            width: 130px;
+            height: 50px;
+            top: 62%;
+            right: 12%;
+            animation-delay: 3s;
+            opacity: 0.5;
+            filter: blur(2px);
+        }
+
+        .cloud-5 {
+            width: 100px;
+            height: 40px;
+            top: 8%;
+            left: 30%;
+            animation-delay: 14s;
+            opacity: 0.45;
+            filter: blur(2px);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(20px) translateY(-10px);
+            }
+            50% {
+                transform: translateX(40px) translateY(0);
+            }
+            75% {
+                transform: translateX(20px) translateY(10px);
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide-glass {
+                padding: 30px;
+                width: 90%;
+                height: 80%;
+            }
+            
+            .slide-title {
+                font-size: 2.8em;
+            }
+            
+            .affirmation-grid {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+            }
+            
+            .slide-glass {
+                padding: 25px;
+                width: 95%;
+                height: 85%;
+                border-radius: 20px;
+            }
+            
+            .slide-title {
+                font-size: 2.2em;
+            }
+            
+            .slide-subtitle {
+                font-size: 1.3em;
+            }
+            
+            .affirmation-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .affirmation-card {
+                padding: 20px;
+            }
+            
+            .slide-indicator {
+                bottom: 15px;
+            }
+            
+            .watermark {
+                top: 20px;
+                left: 20px;
+                font-size: 1.5em;
+            }
+            
+            .slide-number {
+                padding: 5px 16px;
+                font-size: 0.9em;
+                margin-bottom: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide-glass {
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.8em;
+            }
+            
+            .section-title {
+                font-size: 1.6em;
+            }
+            
+            .affirmation-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .affirmation-index {
+                width: 35px;
+                height: 35px;
+                border-radius: 10px;
+                font-size: 1em;
+            }
+            
+            .affirmation-text {
+                font-size: 1em;
+            }
+            
+            .slide-indicator {
+                padding: 6px 12px;
+                bottom: 10px;
+            }
+        }
+        
+        /* Animasi */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Aero Reflection Effect */
+        .slide-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.8), 
+                transparent);
+            border-radius: 24px 24px 0 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Dekorasi Artistik -->
+    <div class="sun-glow"></div>
+    <div class="art-blob art-blob-1"></div>
+    <div class="art-blob art-blob-2"></div>
+
+    <!-- Cloud Decorations -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+    <div class="cloud cloud-5"></div>
+    
+    <div class="presentation-container">
+        <div class="watermark">100 AFIRMASI</div>
+        
+        <div class="slides-container">
+            <!-- Slide 1: Cover -->
+            <div class="slide active" id="slide-1">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">1/11</div>
+                        <h1 class="slide-title">100 Afirmasi yang Terbukti Mengubah Nasib</h1>
+                        <p class="slide-subtitle">Pitch Deck Aero Blue Minimalis</p>
+                        <div class="tip-box">
+                            <div class="tip-title">🌤️ Transformasi Dimulai dari Pikiran</div>
+                            <div class="tip-content">
+                                Seperti langit biru yang luas dan cerah, afirmasi membuka ruang tak terbatas 
+                                untuk pertumbuhan dan perubahan positif dalam hidup Anda.
+                            </div>
+                        </div>
+                        <div class="jump-tip-badge" onclick="showSlide(11)">
+                            💡 Cara pakai efektif ada di slide terakhir
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Afirmasi 1-20 -->
+            <div class="slide" id="slide-2">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">2/11</div>
+                        <h2 class="section-title">Afirmasi Kepercayaan Diri & Harga Diri</h2>
+                        <div class="category-tag">#1-10</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">1</div>
+                                <div class="affirmation-text">"Saya layak mendapatkan kesuksesan dan kebahagiaan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">2</div>
+                                <div class="affirmation-text">"Saya percaya pada kemampuan diri saya sendiri"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">3</div>
+                                <div class="affirmation-text">"Saya adalah pribadi yang unik dan berharga"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">4</div>
+                                <div class="affirmation-text">"Saya pantas dicintai dan dihargai"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">5</div>
+                                <div class="affirmation-text">"Setiap hari saya menjadi versi terbaik dari diri saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">6</div>
+                                <div class="affirmation-text">"Saya memiliki kekuatan untuk mengubah hidup saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">7</div>
+                                <div class="affirmation-text">"Saya berani mengambil risiko untuk meraih impian"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">8</div>
+                                <div class="affirmation-text">"Kegagalan adalah pelajaran yang membawa saya lebih dekat pada kesuksesan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">9</div>
+                                <div class="affirmation-text">"Saya adalah pencipta takdir saya sendiri"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">10</div>
+                                <div class="affirmation-text">"Pendapat orang lain tidak menentukan nilai diri saya"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Afirmasi 11-30 -->
+            <div class="slide" id="slide-3">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">3/11</div>
+                        <h2 class="section-title">Afirmasi Kekayaan & Kelimpahan</h2>
+                        <div class="category-tag">#11-20</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">11</div>
+                                <div class="affirmation-text">"Saya adalah magnet bagi kemakmuran dan kelimpahan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">12</div>
+                                <div class="affirmation-text">"Uang mengalir kepada saya dengan mudah dan berlimpah"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">13</div>
+                                <div class="affirmation-text">"Saya layak menjadi kaya dan sejahtera"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">14</div>
+                                <div class="affirmation-text">"Setiap hari peluang finansial baru terbuka untuk saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">15</div>
+                                <div class="affirmation-text">"Saya memiliki pola pikir orang kaya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">16</div>
+                                <div class="affirmation-text">"Investasi saya selalu menguntungkan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">17</div>
+                                <div class="affirmation-text">"Saya menarik peluang bisnis yang menguntungkan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">18</div>
+                                <div class="affirmation-text">"Kemakmuran adalah hak alami saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">19</div>
+                                <div class="affirmation-text">"Saya bersyukur atas kelimpahan yang ada dalam hidup saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">20</div>
+                                <div class="affirmation-text">"Saya menggunakan uang dengan bijak dan bertanggung jawab"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Afirmasi 21-40 -->
+            <div class="slide" id="slide-4">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">4/11</div>
+                        <h2 class="section-title">Afirmasi Kesehatan & Vitalitas</h2>
+                        <div class="category-tag">#21-30</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">21</div>
+                                <div class="affirmation-text">"Tubuh saya sehat, kuat, dan berenergi"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">22</div>
+                                <div class="affirmation-text">"Setiap sel dalam tubuh saya berfungsi dengan sempurna"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">23</div>
+                                <div class="affirmation-text">"Saya memiliki sistem kekebalan tubuh yang kuat"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">24</div>
+                                <div class="affirmation-text">"Pikiran saya jernih dan fokus"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">25</div>
+                                <div class="affirmation-text">"Saya tidur nyenyak dan bangun dengan segar"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">26</div>
+                                <div class="affirmation-text">"Makanan sehat memberikan nutrisi optimal untuk tubuh saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">27</div>
+                                <div class="affirmation-text">"Olahraga membuat saya merasa hebat dan berenergi"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">28</div>
+                                <div class="affirmation-text">"Saya memiliki vitalitas yang luar biasa"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">29</div>
+                                <div class="affirmation-text">"Tubuh saya memiliki kemampuan penyembuhan alami yang sempurna"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">30</div>
+                                <div class="affirmation-text">"Usia hanyalah angka, saya merasa muda dan bersemangat"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Afirmasi 31-50 -->
+            <div class="slide" id="slide-5">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">5/11</div>
+                        <h2 class="section-title">Afirmasi Cinta & Hubungan</h2>
+                        <div class="category-tag">#31-40</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">31</div>
+                                <div class="affirmation-text">"Saya menarik cinta yang tulus dan sejati"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">32</div>
+                                <div class="affirmation-text">"Hubungan saya penuh dengan cinta, pengertian, dan kebahagiaan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">33</div>
+                                <div class="affirmation-text">"Saya layak dicintai apa adanya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">34</div>
+                                <div class="affirmation-text">"Saya adalah partner yang luar biasa"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">35</div>
+                                <div class="affirmation-text">"Cinta mengalir bebas dalam hidup saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">36</div>
+                                <div class="affirmation-text">"Saya mudah memaafkan dan dimaafkan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">37</div>
+                                <div class="affirmation-text">"Keluarga saya adalah sumber kekuatan dan kebahagiaan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">38</div>
+                                <div class="affirmation-text">"Saya dikelilingi oleh orang-orang yang mendukung dan mencintai saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">39</div>
+                                <div class="affirmation-text">"Komunikasi saya dengan orang lain selalu positif dan efektif"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">40</div>
+                                <div class="affirmation-text">"Saya menarik persahabatan yang bermakna dan langgeng"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Afirmasi 41-60 -->
+            <div class="slide" id="slide-6">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">6/11</div>
+                        <h2 class="section-title">Afirmasi Karier & Kesuksesan Profesional</h2>
+                        <div class="category-tag">#41-50</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">41</div>
+                                <div class="affirmation-text">"Pekerjaan impian saya sedang menuju kepada saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">42</div>
+                                <div class="affirmation-text">"Saya sukses dalam karier yang saya cintai"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">43</div>
+                                <div class="affirmation-text">"Bos dan rekan kerja menghargai kontribusi saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">44</div>
+                                <div class="affirmation-text">"Promosi dan kenaikan gaji datang secara natural kepada saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">45</div>
+                                <div class="affirmation-text">"Saya adalah pemimpin yang menginspirasi"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">46</div>
+                                <div class="affirmation-text">"Kreativitas saya tidak terbatas"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">47</div>
+                                <div class="affirmation-text">"Setiap proyek yang saya tangani berhasil dengan gemilang"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">48</div>
+                                <div class="affirmation-text">"Networking saya semakin luas dan berkualitas"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">49</div>
+                                <div class="affirmation-text">"Saya bekerja di lingkungan yang positif dan mendukung"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">50</div>
+                                <div class="affirmation-text">"Passion saya menjadi sumber penghasilan utama"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Afirmasi 51-70 -->
+            <div class="slide" id="slide-7">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">7/11</div>
+                        <h2 class="section-title">Afirmasi Pertumbuhan Personal</h2>
+                        <div class="category-tag">#51-60</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">51</div>
+                                <div class="affirmation-text">"Saya terus belajar dan berkembang setiap hari"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">52</div>
+                                <div class="affirmation-text">"Tantangan membuat saya semakin kuat"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">53</div>
+                                <div class="affirmation-text">"Saya mudah beradaptasi dengan perubahan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">54</div>
+                                <div class="affirmation-text">"Intuisi saya selalu membimbing saya ke arah yang benar"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">55</div>
+                                <div class="affirmation-text">"Saya memiliki tujuan hidup yang jelas"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">56</div>
+                                <div class="affirmation-text">"Setiap pengalaman mengajarkan sesuatu yang berharga"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">57</div>
+                                <div class="affirmation-text">"Saya adalah versi terbaik dari diri saya kemarin"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">58</div>
+                                <div class="affirmation-text">"Keterampilan saya terus berkembang"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">59</div>
+                                <div class="affirmation-text">"Saya mudah keluar dari zona nyaman"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">60</div>
+                                <div class="affirmation-text">"Potensi saya tidak terbatas"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Afirmasi 61-80 -->
+            <div class="slide" id="slide-8">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">8/11</div>
+                        <h2 class="section-title">Afirmasi Kedamaian & Kebahagiaan</h2>
+                        <div class="category-tag">#61-70</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">61</div>
+                                <div class="affirmation-text">"Saya hidup dalam kedamaian dan ketenangan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">62</div>
+                                <div class="affirmation-text">"Kebahagiaan adalah pilihan saya setiap hari"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">63</div>
+                                <div class="affirmation-text">"Saya melepaskan semua kekhawatiran dan kecemasan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">64</div>
+                                <div class="affirmation-text">"Pikiran saya dipenuhi dengan hal-hal positif"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">65</div>
+                                <div class="affirmation-text">"Saya bersyukur atas semua berkah dalam hidup saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">66</div>
+                                <div class="affirmation-text">"Hati saya dipenuhi dengan cinta dan compassion"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">67</div>
+                                <div class="affirmation-text">"Saya hidup di masa sekarang dengan penuh kesadaran"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">68</div>
+                                <div class="affirmation-text">"Setiap hari adalah hari yang indah"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">69</div>
+                                <div class="affirmation-text">"Saya memancarkan energi positif ke mana pun saya pergi"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">70</div>
+                                <div class="affirmation-text">"Kedamaian batin adalah kekuatan terbesar saya"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Afirmasi 71-90 -->
+            <div class="slide" id="slide-9">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">9/11</div>
+                        <h2 class="section-title">Afirmasi Manifestasi & Daya Tarik</h2>
+                        <div class="category-tag">#71-80</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">71</div>
+                                <div class="affirmation-text">"Alam semesta berkonspirasi untuk membantu saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">72</div>
+                                <div class="affirmation-text">"Impian saya menjadi kenyataan dengan sempurna"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">73</div>
+                                <div class="affirmation-text">"Saya adalah co-creator bersama alam semesta"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">74</div>
+                                <div class="affirmation-text">"Energi saya menarik hal-hal terbaik dalam hidup"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">75</div>
+                                <div class="affirmation-text">"Timing dalam hidup saya selalu sempurna"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">76</div>
+                                <div class="affirmation-text">"Saya percaya pada proses manifestasi"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">77</div>
+                                <div class="affirmation-text">"Doa dan niat saya selalu dikabulkan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">78</div>
+                                <div class="affirmation-text">"Sinkronisitas terjadi secara natural dalam hidup saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">79</div>
+                                <div class="affirmation-text">"Saya aligned dengan tujuan tertinggi saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">80</div>
+                                <div class="affirmation-text">"Setiap langkah membawa saya lebih dekat pada impian"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Afirmasi 81-100 -->
+            <div class="slide" id="slide-10">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">10/11</div>
+                        <h2 class="section-title">Afirmasi Tujuan & Visi Hidup</h2>
+                        <div class="category-tag">#91-100</div>
+                        <div class="affirmation-grid">
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">91</div>
+                                <div class="affirmation-text">"Visi saya jelas dan terarah"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">92</div>
+                                <div class="affirmation-text">"Setiap tindakan saya membawa hasil yang diinginkan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">93</div>
+                                <div class="affirmation-text">"Saya konsisten dalam mengejar tujuan saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">94</div>
+                                <div class="affirmation-text">"Impian besar saya dapat dicapai"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">95</div>
+                                <div class="affirmation-text">"Saya memiliki strategi yang tepat untuk sukses"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">96</div>
+                                <div class="affirmation-text">"Waktu bekerja untuk kepentingan saya"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">97</div>
+                                <div class="affirmation-text">"Setiap hari saya semakin dekat dengan tujuan"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">98</div>
+                                <div class="affirmation-text">"Legacy yang saya tinggalkan akan menginspirasi banyak orang"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">99</div>
+                                <div class="affirmation-text">"Saya menciptakan dampak positif di dunia"</div>
+                            </div>
+                            <div class="affirmation-card">
+                                <div class="affirmation-index">100</div>
+                                <div class="affirmation-text">"Hidup saya adalah masterpiece yang indah"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Cara Penggunaan & Penutup -->
+            <div class="slide" id="slide-11">
+                <div class="slide-glass">
+                    <div class="slide-content">
+                        <div class="slide-number">11/11</div>
+                        <h2 class="section-title">Cara Menggunakan Afirmasi dengan Efektif</h2>
+                        
+                        <div class="tip-box">
+                            <div class="tip-title">💡 Formula 21 Hari</div>
+                            <div class="tip-content">
+                                Pilih 5-7 afirmasi yang paling resonan dengan Anda. 
+                                Ucapkan dengan penuh keyakinan setiap pagi dan malam selama 21 hari berturut-turut.
+                            </div>
+                        </div>
+                        
+                        <ul class="how-to-list">
+                            <li><strong>Konsistensi adalah Kunci</strong> - Jadikan sebagai rutinitas harian seperti menyikat gigi</li>
+                            <li><strong>Emosi & Visualisasi</strong> - Rasakan dan visualisasikan hasil yang Anda inginkan</li>
+                            <li><strong>Personalisasi</strong> - Modifikasi afirmasi sesuai kebutuhan spesifik Anda</li>
+                            <li><strong>Tindakan Pendukung</strong> - Ikuti dengan langkah-langkah konkret menuju tujuan</li>
+                            <li><strong>Lingkungan Positif</strong> - Kelilingi diri dengan energi yang mendukung perubahan</li>
+                        </ul>
+                        
+                        <div class="final-message">
+                            <h2 class="section-title" style="border: none; margin-top: 50px;">🌤️ Mulai Perjalanan Transformasi Anda Hari Ini!</h2>
+                            <p style="color: #0059b3; font-size: 1.3em; margin-top: 20px; line-height: 1.6;">
+                                Seperti langit biru yang selalu ada setelah hujan, 
+                                afirmasi akan membimbing Anda menuju kehidupan yang lebih cerah dan penuh makna.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Indicator -->
+        <div class="slide-indicator" id="slide-indicator">
+            <div class="indicator-dot active" data-slide="1"></div>
+            <div class="indicator-dot" data-slide="2"></div>
+            <div class="indicator-dot" data-slide="3"></div>
+            <div class="indicator-dot" data-slide="4"></div>
+            <div class="indicator-dot" data-slide="5"></div>
+            <div class="indicator-dot" data-slide="6"></div>
+            <div class="indicator-dot" data-slide="7"></div>
+            <div class="indicator-dot" data-slide="8"></div>
+            <div class="indicator-dot" data-slide="9"></div>
+            <div class="indicator-dot" data-slide="10"></div>
+            <div class="indicator-dot" data-slide="11"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.indicator-dot');
+
+        function updateSlideNumber() {
+            const slideNumber = document.querySelector('.slide.active .slide-number');
+            if (slideNumber) {
+                slideNumber.textContent = `${currentSlide}/${totalSlides}`;
+            }
+        }
+
+        function showSlide(n) {
+            if (n > totalSlides) n = 1;
+            if (n < 1) n = totalSlides;
+            
+            currentSlide = n;
+            
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show current slide
+            slides[currentSlide - 1].classList.add('active');
+            
+            // Update indicator dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (parseInt(dot.dataset.slide) === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+            
+            updateSlideNumber();
+            
+            // Animate affirmation cards
+            const activeContent = slides[currentSlide - 1].querySelector('.slide-content');
+            if (activeContent) {
+                const cards = activeContent.querySelectorAll('.affirmation-card');
+                
+                cards.forEach((card, index) => {
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    card.classList.add('animate-fadeInUp');
+                });
+            }
+        }
+
+        // Indicator dots click
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideNum = parseInt(dot.dataset.slide);
+                showSlide(slideNum);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'PageUp':
+                    showSlide(currentSlide - 1);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case 'PageDown':
+                case ' ':
+                    showSlide(currentSlide + 1);
+                    break;
+                case 'Home':
+                    showSlide(1);
+                    break;
+                case 'End':
+                    showSlide(totalSlides);
+                    break;
+            }
+        });
+
+        // Click affirmations to copy
+        document.querySelectorAll('.affirmation-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const text = this.querySelector('.affirmation-text').textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        // Visual feedback
+                        const originalTransform = this.style.transform;
+                        this.style.transform = originalTransform + ' scale(1.05)';
+                        this.style.background = 'rgba(255, 255, 255, 0.6)';
+                        
+                        setTimeout(() => {
+                            this.style.transform = originalTransform;
+                            this.style.background = '';
+                        }, 300);
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        showSlide(1);
+
+        // Auto-animate cards when slide becomes visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = entry.target.querySelectorAll('.affirmation-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('animate-fadeInUp');
+                        }, index * 50);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+
+        slides.forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Add help tooltip (optional)
+        setTimeout(() => {
+            const helpTooltip = document.createElement('div');
+            helpTooltip.innerHTML = 'Gunakan panah keyboard atau klik titik navigasi';
+            helpTooltip.style.position = 'fixed';
+            helpTooltip.style.bottom = '80px';
+            helpTooltip.style.left = '50%';
+            helpTooltip.style.transform = 'translateX(-50%)';
+            helpTooltip.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            helpTooltip.style.color = '#0078d7';
+            helpTooltip.style.padding = '8px 16px';
+            helpTooltip.style.borderRadius = '16px';
+            helpTooltip.style.fontSize = '0.85em';
+            helpTooltip.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            helpTooltip.style.zIndex = '1000';
+            helpTooltip.style.opacity = '0.9';
+            helpTooltip.style.transition = 'opacity 0.3s';
+            helpTooltip.style.border = '1px solid rgba(0, 120, 215, 0.2)';
+            helpTooltip.style.fontWeight = '500';
+            document.body.appendChild(helpTooltip);
+
+            // Hide tooltip after 4 seconds
+            setTimeout(() => {
+                helpTooltip.style.opacity = '0';
+                setTimeout(() => {
+                    helpTooltip.style.display = 'none';
+                }, 300);
+            }, 4000);
+        }, 1000);
+
+        // Add responsive behavior for window resize
+        window.addEventListener('resize', () => {
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>
